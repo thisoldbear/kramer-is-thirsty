@@ -15,4 +15,23 @@ const updateStatus = () => {
   });
 };
 
-updateStatus();
+const searchTweets = (q) => {
+  Twitter.get('search/tweets', {
+      q,
+      count: 30
+    }, (err, data, response) => {
+
+      /// Filter statuses with media object
+      const statuses = data.statuses.filter(status => {
+        if (status.entities.media) {
+          return true;
+        }
+      });
+
+      for (status of statuses) {
+        console.log(status.entities.media[0].media_url);
+      }
+  });
+};
+
+searchTweets('#pretzel filter:images');
