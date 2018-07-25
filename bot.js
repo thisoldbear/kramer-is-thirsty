@@ -55,7 +55,10 @@ const detectPretzel = (status) => {
 
     request(requestOptions, (err, res, body) => {
         const json = JSON.parse(body);
-        if (json.responses[0].labelAnnotations.length) {
+
+        const annotations = json.responses[0].labelAnnotations;
+
+        if (annotations !== undefined && annotations.length) {
           const isPretzel = json.responses[0].labelAnnotations.filter(annotation => {
             return annotation.description === 'pretzel' && annotation.score > 0.7;
           });
